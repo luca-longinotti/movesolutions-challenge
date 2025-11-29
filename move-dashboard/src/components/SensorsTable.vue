@@ -1,6 +1,8 @@
 <script setup>
 import { ref,computed } from 'vue';
 
+const emit = defineEmits(['select']);
+
 const props = defineProps({
   sensors: {
     type: Array,
@@ -77,7 +79,12 @@ const sortedSensors = computed(() => {
         </thead>
     
         <tbody>
-            <tr v-for="sensor in sortedSensors" :key="sensor.id" class="hover:bg-gray-50">
+            <tr
+                v-for="sensor in sortedSensors" 
+                :key="sensor.id" 
+                class="hover:bg-gray-100 cursor-pointer"
+                @click="emit('select', sensor)">
+                
                 <td class="border p-2">{{ sensor.id }}</td>
                 <td class="border p-2">{{ sensor.name }}</td>
                 <td class="border p-2">{{ sensor.location }}</td>

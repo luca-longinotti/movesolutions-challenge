@@ -2,8 +2,14 @@
 import {ref, onMounted} from 'vue';
 import { generateMeasurements } from '../utils/generateMeasurements';
 import SensorTable from '../components/SensorsTable.vue';
+import SensorChart from '../components/SensorsChart.vue';
 
 const sensors = ref([]);
+const selectedSensor = ref(null);
+
+function onSelectSensor(sensor) {
+    selectedSensor.value = sensor;
+}
 
 async function loadSensors() {
     const res = await fetch('/data/sensors.json');
@@ -33,5 +39,14 @@ onMounted(loadSensors);
 </script>
 
 <template>
-    <SensorTable :sensors="sensors" />
+    <SensorTable
+     :sensors="sensors"
+     @select="onSelectSensor"
+    />
+
+    <SensorChart 
+     v-if="selectedSensor"
+     :sensor="selectedSensor"
+    />
+
 </template>
