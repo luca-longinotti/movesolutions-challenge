@@ -1,19 +1,35 @@
 <script setup>
 import {ref, onMounted} from 'vue';
+import { generateMeasurements } from '../utils/generateMeasurements';
 import SensorTable from '../components/SensorsTable.vue';
 
 const sensors = ref([]);
-onMounted(async () => {
-  try {
+
+async function loadSensors() {
     const res = await fetch('/data/sensors.json');
-    if (!res.ok) {
-      throw new Error('Network response was not ok');
+    const baseSensors = await res.json();
+
+    const enriched = [];
+
+    // Enrich sensors with generated measurements, last value and status
+    for (const s of baseSensors) {
+        const measurements = generateMeasurements();
+        const lastValue = measurements.at(-1).disp_mm;
+        
+        enriched.push({ 
+            ...s,
+            measurements,
+            lastValue,
+            status: lastValue > s.threshold ? 'Alarm' : 'OK'        //check status based on threshold
+        });
     }
-    sensors.value = await res.json();
-  } catch (error) {
-    console.error('There was a problem with the fetch operation:', error);
-  }
-});
+    
+    sensors.value = enriched;
+}
+
+
+onMounted(loadSensors);
+
 </script>
 
 <template>

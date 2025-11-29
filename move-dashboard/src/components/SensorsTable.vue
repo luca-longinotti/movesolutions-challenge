@@ -14,6 +14,8 @@ defineProps({
                 <th class="border p-2 text-left">ID</th>
                 <th class="border p-2 text-left">Name</th>
                 <th class="border p-2 text-left">Location</th>
+                <th class="border p-2 text-left">Last Value</th>
+                <th class="border p-2 text-left">Status</th>
             </tr>
         </thead>
     
@@ -22,6 +24,17 @@ defineProps({
                 <td class="border p-2">{{ sensor.id }}</td>
                 <td class="border p-2">{{ sensor.name }}</td>
                 <td class="border p-2">{{ sensor.location }}</td>
+                <td class="border p-2">{{ sensor.lastValue.toFixed(2) }} mm</td>
+                <td class="border p-2">
+                    <span 
+                        :class="{
+                            'text-green-600 font-semibold': sensor.status === 'OK',
+                            'text-red-600 font-semibold': sensor.status === 'Alarm'
+                        }"
+                    >
+                        {{ sensor.status }}
+                    </span>
+                </td>
             </tr>
         </tbody>
     </table>
