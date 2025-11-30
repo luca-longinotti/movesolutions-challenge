@@ -23,13 +23,30 @@ const values = computed(() =>
 
 // Render chart when component is mounted or data changes
 function renderChart() {
+
+    const aboveThreshold = props.sensor.measurements.filter(
+    m => m.disp_mm > props.sensor.threshold);
+
+    const maxValue = Math.max(...values.value);
+    const maxPoint = props.sensor.measurements.find(m => m.disp_mm === maxValue);
+
     const data = [
         {
             x: timestamps.value,
             y: values.value,
             type: 'scatter',
             mode: 'lines+markers',
-            name: props.sensor.id
+            line: { shape: 'spline', smoothing: 1.3 },
+            name: props.sensor.id,
+            hovertemplate: "%{y} mm<br>%{x}<extra></extra>"
+        },
+        {
+            x: aboveThreshold.map(m => m.timestamp),
+            y: aboveThreshold.map(m => m.disp_mm),
+            mode: 'markers',
+            name: "Values above threshold",
+            marker: { color: '#dc2626' }, //red
+            hovertemplate: "%{y} mm<br>%{x}<extra></extra>"
         },
         {
             x: [timestamps.value[0], timestamps.value.at(-1)],
@@ -37,19 +54,30 @@ function renderChart() {
             type: "scatter",
             mode: "lines",
             name: "Threshold",
-            line: { dash: "dash", width: 2 }
+            line: { dash: "dash", width: 2 },
+            hovertemplate: "%{y} mm<br>%{x}<extra></extra>"
+        },
+        {
+            x: [maxPoint.timestamp],
+            y: [maxPoint.disp_mm],
+            mode: "markers+text",
+            name: "Max",
+            marker: { color: "#ffff00", size: 12 },
+            text: [`Max: ${maxPoint.disp_mm} mm`],
+            textposition: "top center",
+            hovertemplate: "%{y} mm<br>%{x}<extra></extra>"
         }
     ];
 
     const layout = {
         title: `Sensor ${props.sensor.name} Measurements`,
         margin: { t: 30, l: 40, r: 10, b: 30 },
-        xaxis: { title: 'Time' },
-        yaxis: { title: 'Displacement (mm)' },
+        xaxis: { title: 'Time'},
+        yaxis: { title: 'Displacement (mm)'},
         showlegend: true
     };
 
-    Plotly.newPlot(chartRef.value, data, layout, {responsive: true});
+    Plotly.newPlot(chartRef.value, data, layout, {responsive: true, displaylogo: false, modeBarButtonsToRemove:["lasso2d", "select2d"]});
 }
 
 onMounted(renderChart);
