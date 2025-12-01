@@ -44,7 +44,7 @@ function renderChart() {
             x: aboveThreshold.map(m => m.timestamp),
             y: aboveThreshold.map(m => m.disp_mm),
             mode: 'markers',
-            name: "Values above threshold",
+            name: "Alarm values",
             marker: { color: '#dc2626' }, //red
             hovertemplate: "%{y} mm<br>%{x}<extra></extra>"
         },
@@ -63,7 +63,6 @@ function renderChart() {
             mode: "markers+text",
             name: "Max",
             marker: { color: "#ffff00", size: 12 },
-            text: [`Max: ${maxPoint.disp_mm} mm`],
             textposition: "top center",
             hovertemplate: "%{y} mm<br>%{x}<extra></extra>"
         }
@@ -71,7 +70,8 @@ function renderChart() {
 
     const layout = {
         title: `Sensor ${props.sensor.name} Measurements`,
-        margin: { t: 30, l: 40, r: 10, b: 30 },
+        margin: { t: 40, l: 30, r: 30, b: 50 },
+        legend: { orientation: "h", y: -0.2, xanchor: "center", x: 0.5 },
         xaxis: { title: 'Time'},
         yaxis: { title: 'Displacement (mm)'},
         showlegend: true

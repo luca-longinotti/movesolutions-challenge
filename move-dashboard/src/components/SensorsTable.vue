@@ -7,10 +7,14 @@ const props = defineProps({
   sensors: {
     type: Array,
     required: true
+  },
+  selected: {
+    type: String,
+    default: null
   }
 });
 
-const sortKey = ref("id");
+const sortKey = ref("status");
 const sortAsc = ref(true);
 
 /*
@@ -57,7 +61,7 @@ const sortedSensors = computed(() => {
             <tr>
                 <th @click="sortBy('id')" class="border p-2 cursor-pointer">
                     ID
-                    <span class="ml-1">{{ sortIcon('id') }}</span>
+                    <span class="">{{ sortIcon('id') }}</span>
                 </th>
                 <th @click="sortBy('name')" class="border p-2 cursor-pointer">
                     Name
@@ -77,25 +81,20 @@ const sortedSensors = computed(() => {
                 </th>
             </tr>
         </thead>
-    
+
         <tbody>
-            <tr
-                v-for="sensor in sortedSensors" 
-                :key="sensor.id" 
-                class="hover:bg-gray-100 cursor-pointer"
-                @click="emit('select', sensor)">
-                
+            <tr v-for="sensor in sortedSensors" :key="sensor.id" @click="emit('select', sensor)" :class="[
+                sensor.id === selected ? 'bg-blue-100 border-3 border-blue-600 font-semibold shadow-inner' : 'hover:bg-gray-100 cursor-pointer transition'
+            ]">
                 <td class="border p-2">{{ sensor.id }}</td>
                 <td class="border p-2">{{ sensor.name }}</td>
                 <td class="border p-2">{{ sensor.location }}</td>
                 <td class="border p-2">{{ sensor.lastValue.toFixed(2) }} mm</td>
                 <td class="border p-2">
-                    <span 
-                        :class="{
-                            'text-green-600 font-semibold': sensor.status === 'OK',
-                            'text-red-600 font-semibold': sensor.status === 'Alarm'
-                        }"
-                    >
+                    <span :class="{
+                        'text-green-600 font-semibold': sensor.status === 'OK',
+                        'text-red-600 font-semibold': sensor.status === 'Alarm'
+                    }">
                         {{ sensor.status }}
                     </span>
                 </td>
