@@ -3,6 +3,7 @@ import {ref, onMounted, computed} from 'vue';
 import { generateMeasurements } from '../utils/generateMeasurements';
 import SensorTable from '../components/SensorsTable.vue';
 import SensorChart from '../components/SensorsChart.vue';
+import SummaryCard from '../components/SummaryCard.vue';
 
 const sensors = ref([]);
 const selectedSensor = ref(null);
@@ -40,6 +41,21 @@ function resetFilters() {
   filterLocation.value = "all";
 }
 
+const alarmCount = computed(() => sensors.value.filter(s => s.status === "Alarm").length);
+
+//Overall min and max across all registered measurements (summary cards)
+const globalMax = computed(() => {
+    const values = sensors.value.flatMap(s => (s.measurements || []).map(m => Number(m.disp_mm) || 0))
+    if (!values.length) return 0
+    return Math.round(Math.max(...values) * 100) / 100
+})
+
+const globalMin = computed(() => {
+    const values = sensors.value.flatMap(s => (s.measurements || []).map(m => Number(m.disp_mm) || 0))
+    if (!values.length) return 0
+    return Math.round(Math.min(...values) * 100) / 100
+})
+
 
 function onSelectSensor(sensor) {
     selectedSensor.value = sensor;
@@ -75,6 +91,26 @@ onMounted(loadSensors);
     <div class="w-full text-center mb-4">
         <h1 class="text-3xl font-bold">Sensor Dashboard</h1>
         <p class="text-gray-600 italic">Monitor sensor measurements and statuses</p>
+    </div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <SummaryCard title="Total sensors" :value="sensors.length">
+                    <template #icon>📡</template>
+                </SummaryCard>
+
+                <SummaryCard title="In alarm" :value="alarmCount">
+                    <template #icon>🚨</template>
+                </SummaryCard>
+
+                <SummaryCard title="Maximum value recorded" :value="globalMax">
+                    <template #icon>📈</template>
+                    <template #meta>mm</template>
+                </SummaryCard>
+
+                <SummaryCard title="Minimum value recorded" :value="globalMin">
+                    <template #icon>📉</template>
+                    <template #meta>mm</template>
+                </SummaryCard>
     </div>
 
     <div class="flex flex-col lg:flex-row items-start gap-6">
