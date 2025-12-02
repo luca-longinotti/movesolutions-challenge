@@ -30,7 +30,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;  
-  background-color: #2cabff;
+  background-color: #41b3ff;
 
 }
 
@@ -38,27 +38,28 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
-
 button {
+  background-color: #dd0000;
+  color: white;
+  padding: 12px 24px;
+  border: none;
   border-radius: 8px;
-  border: 1px solid;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  font-size: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 button:hover {
-  background-color: #1a1a1a;
-  border-color: #646cff;
-  color: #f5ecec;
+  transform: scale(1.02); /* si ingrandisce un po’ */
+  box-shadow: 0 8px 16px rgba(0,0,0,0.25); /* ombra più profonda */
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+
+button:active {
+  transform: scale(0.98); /* leggero rientro al click */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
+
+
 
 .card {
   padding: 2em;
@@ -77,9 +78,6 @@ button:focus-visible {
     background-color: #ffffff;
   }
   a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+    color: #1cac64;
   }
 }

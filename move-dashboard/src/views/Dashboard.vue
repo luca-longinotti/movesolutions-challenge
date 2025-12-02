@@ -136,7 +136,7 @@ onMounted(loadSensors);
                 </select>
 
                 <!-- Reset -->
-                <button @click="resetFilters" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300">
+                <button @click="resetFilters">
                     Reset
                 </button>
 
