@@ -1,35 +1,29 @@
 <script setup>
-import { ref,computed } from 'vue';
+import { ref, computed } from 'vue';
 
 const emit = defineEmits(['select']);
 
 const props = defineProps({
-  sensors: {
-    type: Array,
-    required: true
-  },
-  selected: {
-    type: String,
-    default: null
-  }
+    sensors: {
+        type: Array,
+        required: true
+    },
+    selected: {
+        type: String,
+        default: null
+    }
 });
 
 const sortKey = ref("status");
 const sortAsc = ref(true);
 
-/*
-function sortByName() {
-   sortAsc.value = !sortAsc.value;
-}
-*/
-
 function sortIcon(key) {
-    if(key !== sortKey.value) return '';
+    if (key !== sortKey.value) return '';
     return sortAsc.value ? '▲' : '▼';
 }
 
 function sortBy(key) {
-    if(key === sortKey.value) {
+    if (key === sortKey.value) {
         sortAsc.value = !sortAsc.value; //same coloumn
     } else {
         sortKey.value = key;            //new coloumn
@@ -44,11 +38,11 @@ const sortedSensors = computed(() => {
         let valB = b[sortKey.value];
 
         //string normalizaion
-        if(typeof valA === 'string') valA = valA.toLowerCase();
-        if(typeof valB === 'string') valB = valB.toLowerCase();
+        if (typeof valA === 'string') valA = valA.toLowerCase();
+        if (typeof valB === 'string') valB = valB.toLowerCase();
 
-        if(valA < valB) return sortAsc.value ? -1 : 1;
-        if(valA > valB) return sortAsc.value ? 1 : -1;
+        if (valA < valB) return sortAsc.value ? -1 : 1;
+        if (valA > valB) return sortAsc.value ? 1 : -1;
         return 0;
     });
 });

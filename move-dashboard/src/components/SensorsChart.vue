@@ -1,6 +1,6 @@
 <script setup>
 
-import {computed, onMounted, watch, ref} from 'vue';
+import { computed, onMounted, watch, ref } from 'vue';
 import Plotly from 'plotly.js-dist-min';
 
 const props = defineProps({
@@ -13,11 +13,11 @@ const props = defineProps({
 const chartRef = ref(null);
 
 // Prepare data for charting
-const timestamps = computed(() => 
+const timestamps = computed(() =>
     props.sensor.measurements.map(m => m.timestamp)
 );
 
-const values = computed(() => 
+const values = computed(() =>
     props.sensor.measurements.map(m => m.disp_mm)
 );
 
@@ -25,7 +25,7 @@ const values = computed(() =>
 function renderChart() {
 
     const aboveThreshold = props.sensor.measurements.filter(
-    m => m.disp_mm > props.sensor.threshold);
+        m => m.disp_mm > props.sensor.threshold);
 
     const maxValue = Math.max(...values.value);
     const maxPoint = props.sensor.measurements.find(m => m.disp_mm === maxValue);
@@ -72,12 +72,12 @@ function renderChart() {
         title: `Sensor ${props.sensor.name} Measurements`,
         margin: { t: 40, l: 30, r: 30, b: 50 },
         legend: { orientation: "h", y: -0.2, xanchor: "center", x: 0.5 },
-        xaxis: { title: 'Time'},
-        yaxis: { title: 'Displacement (mm)'},
+        xaxis: { title: 'Time' },
+        yaxis: { title: 'Displacement (mm)' },
         showlegend: true
     };
 
-    Plotly.newPlot(chartRef.value, data, layout, {responsive: true, displaylogo: false, modeBarButtonsToRemove:["lasso2d", "select2d"]});
+    Plotly.newPlot(chartRef.value, data, layout, { responsive: true, displaylogo: false, modeBarButtonsToRemove: ["lasso2d", "select2d"] });
 }
 
 onMounted(renderChart);
@@ -98,6 +98,6 @@ watch(
             {{ sensor.name }} — Trend last 3 days
         </h2>
 
-    <div ref="chartRef" class="w-full h-80"></div>
+        <div ref="chartRef" class="w-full h-80"></div>
     </div>
 </template>
