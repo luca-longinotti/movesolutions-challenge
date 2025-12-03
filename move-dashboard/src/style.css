@@ -1,68 +1,11 @@
 @import "tailwindcss";
 
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
-  margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;  
+  min-height: 100vh;
   background-color: #41b3ff;
-
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-button {
-  background-color: #dd0000;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-button:hover {
-  transform: scale(1.02); /* si ingrandisce un po’ */
-  box-shadow: 0 8px 16px rgba(0,0,0,0.25); /* ombra più profonda */
-}
-
-button:active {
-  transform: scale(0.98); /* leggero rientro al click */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-
-
-.card {
-  padding: 2em;
 }
 
 #app {
@@ -72,12 +15,21 @@ button:active {
   text-align: center;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #1cac64;
-  }
+.reset-button {
+  @apply bg-red-600 text-white px-6 py-3 rounded-lg cursor-pointer text-base transition-transform duration-200 ease-in-out;
 }
+
+.reset-button:hover {
+  @apply scale-102 shadow-lg;
+}
+
+.reset-button:active {
+  @apply scale-95 shadow-md;
+}
+
+.form-control {
+  @apply border rounded px-3 py-2;
+}
+
+
+
