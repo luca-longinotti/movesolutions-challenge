@@ -31,6 +31,7 @@ La dashboard sarà accessibile su `http://localhost:5173` (o su un'altra porta i
 
 ## 📁 Struttura del progetto
 
+```bash 
 move-dashboard/
 ├─ public/
 │  ├─ data/
@@ -50,7 +51,7 @@ move-dashboard/
 ├─ package.json
 ├─ vite.config.js
 ├─ README.md
-
+```
 ---
 
 ## 📊 Funzionalità principali
@@ -86,7 +87,7 @@ Filtri avanzati
 - Pulsante di reset filtri
 
 Card di riepilogo
-Le card offrono una panoramica immediata dello stato generale del sistema:
+Le card offrono una panoramica immediata dello stato generale del sistema:  
 - Numero totale di sensori
 - Numero di sensori in stato "Alarm"
 - Valore massimo registrato tra tutti i sensori
@@ -96,10 +97,10 @@ Le card offrono una panoramica immediata dello stato generale del sistema:
 
 ## 🧩 Decisioni progettuali
 
-- Plotly per il grafico:
+- Plotly per il grafico:  
 Offre un ottimo controllo della resa grafica ed è immediatamente integrabile in Vue
 
-- Mock dei dati:
+- Mock dei dati:  
 Le misurazioni vengono generate dinamicamente con generateMeasurements.js, rendendo la dashboard autonoma e testabile senza backend
 
 ---
